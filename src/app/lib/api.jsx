@@ -12,7 +12,6 @@ export async function fetchHeaderFooterData() {
 }
 export async function fetchHomePage() {
   try {
-    console.log("API_URL:", API_BASE_URL);
     const res = await fetch(`${API_BASE_URL}/api/fetch-home_page`, {
       cache: "no-store",
     });

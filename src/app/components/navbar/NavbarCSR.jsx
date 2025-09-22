@@ -18,10 +18,9 @@ export default function NavbarCSR({ initialData }) {
   const isActive = (url) => pathname === url;
 
   return (
-    <nav className="w-full bg-white shadow-md px-4 sm:px-6 lg:px-8 py-4 relative">
-      {/* Desktop & Tablet: Grid layout for perfect centering */}
+    <nav className="w-full bg-white shadow-md px-4 sm:px-6 lg:px-8 py-4 relative sticky top-0 z-50">
+      {/* Desktop Navbar */}
       <div className="hidden md:grid grid-cols-3 items-center lg:grid-cols-3">
-        {/* Left nav items */}
         <div className="flex justify-end space-x-8 lg:space-x-12">
           {leftItems.map((item) => (
             <Link
@@ -38,12 +37,10 @@ export default function NavbarCSR({ initialData }) {
           ))}
         </div>
 
-        {/* Logo centered & italic */}
         <div className="flex justify-center logo italic">
           {data.footer.name}
         </div>
 
-        {/* Right nav items */}
         <div className="flex justify-start space-x-8 lg:space-x-12">
           {rightItems.map((item) => (
             <Link
@@ -61,7 +58,7 @@ export default function NavbarCSR({ initialData }) {
         </div>
       </div>
 
-      {/* CTA button on desktop/tablet */}
+      {/* CTA on Desktop */}
       {cta && (
         <div className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2">
           <Link
@@ -73,13 +70,12 @@ export default function NavbarCSR({ initialData }) {
         </div>
       )}
 
-      {/* Mobile logo */}
-      <div className="md:hidden text-center logo italic">
-        {data.footer.name}
-      </div>
+      {/* Mobile Navbar */}
+      <div className="md:hidden flex items-center justify-between w-full px-4">
+        {/* Logo aligned left */}
+        <div className="logo italic">{data.footer.name}</div>
 
-      {/* Hamburger for mobile */}
-      <div className="md:hidden absolute right-4 top-1/2 -translate-y-1/2">
+        {/* Hamburger button on right */}
         <button
           aria-label="Open menu"
           className="focus:outline-none"
@@ -101,7 +97,7 @@ export default function NavbarCSR({ initialData }) {
         </button>
       </div>
 
-      {/* Mobile menu */}
+      {/* Mobile Menu Drawer */}
       <div
         className={`fixed inset-0 z-50 md:hidden transition-transform duration-300 ease-in-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"

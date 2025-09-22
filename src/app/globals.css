@@ -28,7 +28,7 @@ h6 {
 
 .logo {
   font-family: var(--font-playfair-display);
-  font-size: 1.5rem; /* 24px - base mobile size */
+  font-size: 1rem; /* 24px - base mobile size */
   font-weight: 700;
   text-transform: uppercase;
   color: var(--color-muted-bronze);
@@ -145,4 +145,8 @@ h6 {
 
 .animate-bounce-slow {
   animation: bounce-slow 1s infinite;
+}
+.button:hover {
+  background-color: #916f3f;
+  transform: translateY(-2px);
 }
