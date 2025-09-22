@@ -14,19 +14,15 @@ export default function NavbarCSR({ initialData }) {
   const rightItems = menus.slice(2, 4);
   const cta = menus.find((item) => item.is_button);
 
-  // Combine nav items for mobile menu
   const mobileItems = [...leftItems, ...rightItems];
 
-  // Function to check if a menu item is active
   const isActive = (url) => {
     return pathname === url;
   };
 
   return (
     <nav className="w-full bg-white shadow-md px-4 sm:px-6 lg:px-8 py-4 flex items-center relative">
-      {/* Left + Logo + Right */}
       <div className="hidden lg:flex flex-1 justify-center items-center">
-        {/* Left nav items */}
         <div className="flex space-x-8 mr-12">
           {leftItems.map((item) => (
             <Link
@@ -43,10 +39,8 @@ export default function NavbarCSR({ initialData }) {
           ))}
         </div>
 
-        {/* Logo / Name - Now in Italic */}
         <div className="logo text-center mx-12 italic">{data.footer.name}</div>
 
-        {/* Right nav items */}
         <div className="flex space-x-8 ml-12">
           {rightItems.map((item) => (
             <Link
@@ -64,9 +58,7 @@ export default function NavbarCSR({ initialData }) {
         </div>
       </div>
 
-      {/* Tablet Layout (md and lg) */}
       <div className="hidden md:flex lg:hidden flex-1 justify-between items-center">
-        {/* Left items for tablet */}
         <div className="flex space-x-6">
           {leftItems.map((item) => (
             <Link
@@ -83,10 +75,8 @@ export default function NavbarCSR({ initialData }) {
           ))}
         </div>
 
-        {/* Center logo for tablet - Now in Italic */}
         <div className="logo italic">{data.footer.name}</div>
 
-        {/* Right items for tablet */}
         <div className="flex space-x-6">
           {rightItems.map((item) => (
             <Link
@@ -104,12 +94,10 @@ export default function NavbarCSR({ initialData }) {
         </div>
       </div>
 
-      {/* Mobile Logo - Now in Italic */}
       <div className="md:hidden flex-1 text-center logo italic">
         {data.footer.name}
       </div>
 
-      {/* CTA button - Desktop & Tablet */}
       {cta && (
         <div className="hidden md:block ml-4">
           <Link
@@ -121,7 +109,6 @@ export default function NavbarCSR({ initialData }) {
         </div>
       )}
 
-      {/* Mobile hamburger - Standard Hamburger Icon */}
       <div className="md:hidden ml-4">
         <button
           aria-label="Open menu"
@@ -144,15 +131,12 @@ export default function NavbarCSR({ initialData }) {
         </button>
       </div>
 
-      {/* Mobile menu - Full screen slide from right */}
       <div
         className={`fixed inset-0 z-50 md:hidden transition-transform duration-300 ease-in-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        {/* Full screen white background */}
         <div className="absolute top-0 right-0 h-full w-full bg-white">
-          {/* Close button - positioned properly */}
           <div className="flex justify-end p-4">
             <button
               aria-label="Close menu"
@@ -175,9 +159,7 @@ export default function NavbarCSR({ initialData }) {
             </button>
           </div>
 
-          {/* Mobile nav content - reduced top space */}
           <div className="flex flex-col items-center justify-start pt-8 px-6 h-full">
-            {/* Navigation items */}
             <div className="w-full max-w-md space-y-2">
               {mobileItems.map((item, index) => (
                 <div
@@ -199,7 +181,6 @@ export default function NavbarCSR({ initialData }) {
               ))}
             </div>
 
-            {/* Mobile CTA button */}
             {cta && (
               <div className="mt-8 w-full max-w-md">
                 <Link
