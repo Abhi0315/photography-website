@@ -19,7 +19,6 @@ export default function NavbarCSR({ initialData }) {
 
   return (
     <nav className="w-full bg-white shadow-md px-4 sm:px-6 lg:px-8 py-4 relative sticky top-0 z-50">
-      {/* Desktop Navbar */}
       <div className="hidden md:grid grid-cols-3 items-center lg:grid-cols-3">
         <div className="flex justify-end space-x-8 lg:space-x-12">
           {leftItems.map((item) => (
@@ -58,7 +57,6 @@ export default function NavbarCSR({ initialData }) {
         </div>
       </div>
 
-      {/* CTA on Desktop */}
       {cta && (
         <div className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2">
           <Link
@@ -70,12 +68,9 @@ export default function NavbarCSR({ initialData }) {
         </div>
       )}
 
-      {/* Mobile Navbar */}
       <div className="md:hidden flex items-center justify-between w-full px-4">
-        {/* Logo aligned left */}
         <div className="logo italic">{data.footer.name}</div>
 
-        {/* Hamburger button on right */}
         <button
           aria-label="Open menu"
           className="focus:outline-none"
@@ -97,7 +92,6 @@ export default function NavbarCSR({ initialData }) {
         </button>
       </div>
 
-      {/* Mobile Menu Drawer */}
       <div
         className={`fixed inset-0 z-50 md:hidden transition-transform duration-300 ease-in-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
