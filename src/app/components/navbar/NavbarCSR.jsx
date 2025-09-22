@@ -13,17 +13,16 @@ export default function NavbarCSR({ initialData }) {
   const leftItems = menus.slice(0, 2);
   const rightItems = menus.slice(2, 4);
   const cta = menus.find((item) => item.is_button);
-
   const mobileItems = [...leftItems, ...rightItems];
 
-  const isActive = (url) => {
-    return pathname === url;
-  };
+  const isActive = (url) => pathname === url;
 
   return (
-    <nav className="w-full bg-white shadow-md px-4 sm:px-6 lg:px-8 py-4 flex items-center relative">
-      <div className="hidden lg:flex flex-1 justify-center items-center">
-        <div className="flex space-x-8 mr-12">
+    <nav className="w-full bg-white shadow-md px-4 sm:px-6 lg:px-8 py-4 relative">
+      {/* Desktop & Tablet: Grid layout for perfect centering */}
+      <div className="hidden md:grid grid-cols-3 items-center lg:grid-cols-3">
+        {/* Left nav items */}
+        <div className="flex justify-end space-x-8 lg:space-x-12">
           {leftItems.map((item) => (
             <Link
               key={item.id}
@@ -39,9 +38,13 @@ export default function NavbarCSR({ initialData }) {
           ))}
         </div>
 
-        <div className="logo text-center mx-12 italic">{data.footer.name}</div>
+        {/* Logo centered & italic */}
+        <div className="flex justify-center logo italic">
+          {data.footer.name}
+        </div>
 
-        <div className="flex space-x-8 ml-12">
+        {/* Right nav items */}
+        <div className="flex justify-start space-x-8 lg:space-x-12">
           {rightItems.map((item) => (
             <Link
               key={item.id}
@@ -58,58 +61,25 @@ export default function NavbarCSR({ initialData }) {
         </div>
       </div>
 
-      <div className="hidden md:flex lg:hidden flex-1 justify-between items-center">
-        <div className="flex space-x-6">
-          {leftItems.map((item) => (
-            <Link
-              key={item.id}
-              href={item.url}
-              className={`nav text-black transition-colors duration-200 ${
-                isActive(item.url)
-                  ? "uppercase font-bold"
-                  : "normal-case font-medium"
-              }`}
-            >
-              {item.text}
-            </Link>
-          ))}
-        </div>
-
-        <div className="logo italic">{data.footer.name}</div>
-
-        <div className="flex space-x-6">
-          {rightItems.map((item) => (
-            <Link
-              key={item.id}
-              href={item.url}
-              className={`nav text-black transition-colors duration-200 ${
-                isActive(item.url)
-                  ? "uppercase font-bold"
-                  : "normal-case font-medium"
-              }`}
-            >
-              {item.text}
-            </Link>
-          ))}
-        </div>
-      </div>
-
-      <div className="md:hidden flex-1 text-center logo italic">
-        {data.footer.name}
-      </div>
-
+      {/* CTA button on desktop/tablet */}
       {cta && (
-        <div className="hidden md:block ml-4">
+        <div className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2">
           <Link
             href={cta.url}
-            className="button px-4 py-2 rounded-none whitespace-nowrap"
+            className="button px-6 py-3 text-lg rounded-none whitespace-nowrap"
           >
             {cta.text}
           </Link>
         </div>
       )}
 
-      <div className="md:hidden ml-4">
+      {/* Mobile logo */}
+      <div className="md:hidden text-center logo italic">
+        {data.footer.name}
+      </div>
+
+      {/* Hamburger for mobile */}
+      <div className="md:hidden absolute right-4 top-1/2 -translate-y-1/2">
         <button
           aria-label="Open menu"
           className="focus:outline-none"
@@ -131,6 +101,7 @@ export default function NavbarCSR({ initialData }) {
         </button>
       </div>
 
+      {/* Mobile menu */}
       <div
         className={`fixed inset-0 z-50 md:hidden transition-transform duration-300 ease-in-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
@@ -153,7 +124,7 @@ export default function NavbarCSR({ initialData }) {
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
-                  d="M6 18L18-6M6 6l12 12"
+                  d="M6 18L18 6M6 6l12 12"
                 />
               </svg>
             </button>
@@ -185,7 +156,7 @@ export default function NavbarCSR({ initialData }) {
               <div className="mt-8 w-full max-w-md">
                 <Link
                   href={cta.url}
-                  className="button px-6 py-3 rounded-none whitespace-nowrap block text-center font-semibold hover:bg-opacity-90 transition-colors duration-200"
+                  className="button px-6 py-3 text-lg rounded-none whitespace-nowrap block text-center font-semibold hover:bg-opacity-90 transition-colors duration-200"
                   onClick={() => setMobileOpen(false)}
                 >
                   {cta.text}
