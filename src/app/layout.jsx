@@ -1,7 +1,7 @@
 import "@/app/globals.css";
 
 export const metadata = {
-  title: "Photography Portfolio",
+  title: "RW's Photography Studio",
   description: "A showcase of stunning photography",
 };
 
