@@ -1,0 +1,128 @@
+@import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;500;600;700&family=Playfair+Display:wght@400;700&display=swap");
+
+:root {
+  --font-playfair-display: "Playfair Display", serif;
+  --font-lato: "Lato", sans-serif;
+
+  --color-black: #000000;
+  --color-white: #ffffff;
+  --color-muted-bronze: #ad8a56;
+}
+
+body {
+  font-family: var(--font-lato);
+  color: var(--color-black);
+  background-color: var(--color-white);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: var(--font-playfair-display);
+}
+
+.logo {
+  font-family: var(--font-playfair-display);
+  font-size: 2rem; /* 28px */
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--color-muted-bronze);
+}
+
+.main-heading {
+  font-family: var(--font-playfair-display);
+  font-size: 2.5rem; /* 32px */
+  font-weight: 700;
+  color: var(--color-black);
+}
+
+.subheading {
+  font-family: var(--font-playfair-display);
+  font-size: 1.875rem; /* 24px */
+  font-weight: 400;
+  color: var(--color-muted-bronze);
+}
+
+.body-text {
+  font-family: var(--font-lato);
+  font-size: 1rem; /* 16px */
+  font-weight: 400;
+  color: var(--color-black);
+}
+
+.button {
+  font-family: var(--font-lato);
+  font-size: 1rem; /* 16px */
+  font-weight: 600;
+  background-color: var(--color-muted-bronze);
+  color: var(--color-white);
+}
+
+.nav {
+  font-family: var(--font-lato);
+  font-size: 1rem; /* 14px */
+  font-weight: 500;
+  text-transform: uppercase;
+  background-color: var(--color-white);
+  color: var(--color-black);
+}
+
+.caption {
+  font-family: var(--font-playfair-display);
+  font-size: 1rem; /* 14px */
+  font-weight: 400;
+  font-style: italic;
+  color: var(--color-muted-bronze);
+}
+
+.footer-text {
+  font-family: var(--font-lato);
+  font-size: 0.875rem; /* 14px */
+  font-weight: 400;
+  color: var(--color-white);
+  background-color: var(--color-black);
+}
+
+@layer base {
+  .text-black {
+    color: var(--color-black) !important;
+  }
+
+  .text-white {
+    color: var(--color-white) !important;
+  }
+
+  .bg-black {
+    background-color: var(--color-black) !important;
+  }
+
+  .bg-white {
+    background-color: var(--color-white) !important;
+  }
+
+  .bg-muted-bronze {
+    background-color: var(--color-muted-bronze) !important;
+  }
+
+  .text-muted-bronze {
+    color: var(--color-muted-bronze) !important;
+  }
+}
+@keyframes bounce-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+.animate-bounce-slow {
+  animation: bounce-slow 1s infinite;
+}
