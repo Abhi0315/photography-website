@@ -1,24 +1,50 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function NavbarCSR({ initialData }) {
-  const [data] = useState(initialData);
+  const [data, setData] = useState(initialData);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
+  // Optional: refresh CSR once on mount
+  useEffect(() => {
+    async function refreshData() {
+      try {
+        const res = await fetch("/api/header-footer");
+        if (!res.ok) return;
+        const json = await res.json();
+        setData(json);
+      } catch (err) {
+        console.error("NavbarCSR fetch error:", err);
+      }
+    }
+    refreshData();
+  }, []);
+
+  // Close mobile menu on route change
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  if (!data) return null;
+
   const menus = data?.menus.filter((item) => item.is_active) || [];
-  const leftItems = menus.slice(0, 2);
-  const rightItems = menus.slice(2, 4);
-  const cta = menus.find((item) => item.is_button);
-  const mobileItems = [...leftItems, ...rightItems];
+  const lastCtaIndex = menus.map((m) => m.is_button).lastIndexOf(true);
+  const cta = lastCtaIndex !== -1 ? menus[lastCtaIndex] : null;
+  const navItems = menus.filter((_, idx) => idx !== lastCtaIndex);
+
+  const mid = Math.ceil(navItems.length / 2);
+  const leftItems = navItems.slice(0, mid);
+  const rightItems = navItems.slice(mid);
 
   const isActive = (url) => pathname === url;
 
   return (
     <nav className="w-full bg-white shadow-md px-4 sm:px-6 lg:px-8 py-4 relative sticky top-0 z-50">
+      {/* Desktop */}
       <div className="hidden md:grid grid-cols-3 items-center lg:grid-cols-3">
         <div className="flex justify-end space-x-8 lg:space-x-12">
           {leftItems.map((item) => (
@@ -57,6 +83,7 @@ export default function NavbarCSR({ initialData }) {
         </div>
       </div>
 
+      {/* CTA Button */}
       {cta && (
         <div className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2">
           <Link
@@ -68,6 +95,7 @@ export default function NavbarCSR({ initialData }) {
         </div>
       )}
 
+      {/* Mobile */}
       <div className="md:hidden flex items-center justify-between w-full px-4">
         <div className="logo italic">{data.footer.name}</div>
 
@@ -92,12 +120,14 @@ export default function NavbarCSR({ initialData }) {
         </button>
       </div>
 
+      {/* Mobile Menu */}
       <div
         className={`fixed inset-0 z-50 md:hidden transition-transform duration-300 ease-in-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
-        <div className="absolute top-0 right-0 h-full w-full bg-white">
+        <div className="absolute top-0 right-0 h-full w-full bg-white flex flex-col">
+          {/* Close button */}
           <div className="flex justify-end p-4">
             <button
               aria-label="Close menu"
@@ -120,40 +150,45 @@ export default function NavbarCSR({ initialData }) {
             </button>
           </div>
 
-          <div className="flex flex-col items-center justify-start pt-8 px-6 h-full">
-            <div className="w-full max-w-md space-y-2">
-              {mobileItems.map((item, index) => (
-                <div
-                  key={index}
-                  className="w-full text-center border-b border-gray-200"
-                >
-                  <Link
-                    href={item.url}
-                    className={`nav text-black text-lg py-4 block hover:text-muted-bronze transition-colors duration-200 ${
-                      isActive(item.url)
-                        ? "uppercase font-bold"
-                        : "normal-case font-medium"
-                    }`}
-                    onClick={() => setMobileOpen(false)}
-                  >
-                    {item.text}
-                  </Link>
-                </div>
-              ))}
-            </div>
+          {/* Logo at top */}
+          <div className="flex justify-center py-6">
+            <div className="logo text-3xl">{data.footer.name}</div>
+          </div>
 
-            {cta && (
-              <div className="mt-8 w-full max-w-md">
+          {/* Nav items */}
+          <div className="flex flex-col flex-1 justify-center items-stretch">
+            {navItems.map((item, index) => (
+              <div
+                key={index}
+                className="flex-1 border-b border-gray-200 flex items-center justify-center"
+              >
                 <Link
-                  href={cta.url}
-                  className="button px-6 py-3 text-lg rounded-none whitespace-nowrap block text-center font-semibold hover:bg-opacity-90 transition-colors duration-200"
+                  href={item.url}
+                  className={`nav text-black text-2xl py-0 block hover:text-muted-bronze transition-colors duration-200 ${
+                    isActive(item.url)
+                      ? "uppercase font-bold"
+                      : "normal-case font-medium"
+                  }`}
                   onClick={() => setMobileOpen(false)}
                 >
-                  {cta.text}
+                  {item.text}
                 </Link>
               </div>
-            )}
+            ))}
           </div>
+
+          {/* CTA button at bottom */}
+          {cta && (
+            <div className="w-full px-6 py-10 flex justify-center">
+              <Link
+                href={cta.url}
+                className="button w-full max-w-md px-8 py-4 text-xl rounded-none whitespace-nowrap block text-center font-semibold hover:bg-opacity-90 transition-colors duration-200"
+                onClick={() => setMobileOpen(false)}
+              >
+                {cta.text}
+              </Link>
+            </div>
+          )}
         </div>
       </div>
     </nav>
