@@ -1,5 +1,6 @@
 import "./globals.css";
 import NavbarSSR from "./components/navbar/NavbarSSR";
+import FooterSSR from "./components/Footer/FooterSSR";
 
 export const metadata = {
   title: "RW Photography",
@@ -12,6 +13,7 @@ export default function RootLayout({ children }) {
       <body>
         <NavbarSSR />
         {children}
+        <FooterSSR />
       </body>
     </html>
   );

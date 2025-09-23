@@ -1,5 +1,11 @@
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
+export function normalizeImageUrl(path) {
+  if (!path) return "";
+  if (path.startsWith("http")) return path; // already full URL
+  return `https://lensbackend.networkindia.com${path}`; // prepend backend domain
+}
+
 export async function fetchHeaderFooterData() {
   try {
     const res = await fetch(`${API_BASE_URL}/api/header-footer/`, {
