@@ -96,7 +96,7 @@ export default function NavbarCSR({ initialData }) {
 
         <button
           aria-label="Open menu"
-          className="focus:outline-none"
+          className="focus:outline-none text-black"
           onClick={() => setMobileOpen(true)}
         >
           <svg
