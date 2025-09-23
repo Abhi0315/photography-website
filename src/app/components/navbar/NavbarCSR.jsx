@@ -9,7 +9,6 @@ export default function NavbarCSR({ initialData }) {
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
 
-  // Optional: refresh CSR once on mount
   useEffect(() => {
     async function refreshData() {
       try {
@@ -24,7 +23,6 @@ export default function NavbarCSR({ initialData }) {
     refreshData();
   }, []);
 
-  // Close mobile menu on route change
   useEffect(() => {
     setMobileOpen(false);
   }, [pathname]);
@@ -44,7 +42,6 @@ export default function NavbarCSR({ initialData }) {
 
   return (
     <nav className="w-full bg-white shadow-md px-4 sm:px-6 lg:px-8 py-4 relative sticky top-0 z-50">
-      {/* Desktop */}
       <div className="hidden md:grid grid-cols-3 items-center lg:grid-cols-3">
         <div className="flex justify-end space-x-8 lg:space-x-12">
           {leftItems.map((item) => (
@@ -83,7 +80,6 @@ export default function NavbarCSR({ initialData }) {
         </div>
       </div>
 
-      {/* CTA Button */}
       {cta && (
         <div className="hidden md:block absolute right-6 top-1/2 -translate-y-1/2">
           <Link
@@ -95,7 +91,6 @@ export default function NavbarCSR({ initialData }) {
         </div>
       )}
 
-      {/* Mobile */}
       <div className="md:hidden flex items-center justify-between w-full px-4">
         <div className="logo italic">{data.footer.name}</div>
 
@@ -120,14 +115,12 @@ export default function NavbarCSR({ initialData }) {
         </button>
       </div>
 
-      {/* Mobile Menu */}
       <div
         className={`fixed inset-0 z-50 md:hidden transition-transform duration-300 ease-in-out ${
           mobileOpen ? "translate-x-0" : "translate-x-full"
         }`}
       >
         <div className="absolute top-0 right-0 h-full w-full bg-white flex flex-col">
-          {/* Close button */}
           <div className="flex justify-end p-4">
             <button
               aria-label="Close menu"
@@ -150,12 +143,10 @@ export default function NavbarCSR({ initialData }) {
             </button>
           </div>
 
-          {/* Logo at top */}
           <div className="flex justify-center py-6">
             <div className="logo text-3xl">{data.footer.name}</div>
           </div>
 
-          {/* Nav items */}
           <div className="flex flex-col flex-1 justify-center items-stretch">
             {navItems.map((item, index) => (
               <div
@@ -177,7 +168,6 @@ export default function NavbarCSR({ initialData }) {
             ))}
           </div>
 
-          {/* CTA button at bottom */}
           {cta && (
             <div className="w-full px-6 py-10 flex justify-center">
               <Link
