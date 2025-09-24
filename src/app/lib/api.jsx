@@ -2,17 +2,21 @@ const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL;
 
 export function normalizeImageUrl(path) {
   if (!path) return "";
-  if (path.startsWith("http")) return path; // already full URL
-  return `https://lensbackend.networkindia.com${path}`; // prepend backend domain
+  if (path.startsWith("http")) return path;
+
+  const baseUrl = process.env.NEXT_PUBLIC_API_URL || "";
+
+  return `${baseUrl.replace(/\/$/, "")}${
+    path.startsWith("/") ? "" : "/"
+  }${path}`;
 }
 
 export async function fetchHeaderFooterData() {
   try {
     const res = await fetch(`${API_BASE_URL}/api/header-footer/`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
-    if (!res.ok) throw new Error("Failed to fetch header/footer data");
-    return res.json();
+    return res.ok ? res.json() : null;
   } catch (err) {
     console.error("fetchHeaderFooterData error:", err);
     return null;
@@ -22,7 +26,7 @@ export async function fetchHeaderFooterData() {
 export async function fetchHomePage() {
   try {
     const res = await fetch(`${API_BASE_URL}/api/fetch-home_page`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
     if (!res.ok) throw new Error(`Failed to fetch home page: ${res.status}`);
     return res.json();

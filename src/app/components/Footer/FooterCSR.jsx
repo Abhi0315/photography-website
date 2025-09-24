@@ -29,7 +29,6 @@ export default function FooterCSR({ initialData }) {
     <footer className="bg-black text-white py-12">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-0">
-          {/* Quick Links Section */}
           <div className="text-center w-full py-8 md:py-8 md:px-6 border-b md:border-b-0 md:border-r border-muted-bronze flex flex-col justify-center">
             <div className="space-y-4 mx-auto">
               <h3 className="font-semibold text-lg relative inline-block pb-2">
@@ -58,7 +57,6 @@ export default function FooterCSR({ initialData }) {
             </div>
           </div>
 
-          {/* Center Section */}
           <div className="text-center w-full py-8 md:py-8 md:px-6 border-b md:border-b-0 md:border-r border-muted-bronze flex flex-col justify-center">
             <div className="space-y-4 mx-auto">
               <h3
@@ -69,9 +67,7 @@ export default function FooterCSR({ initialData }) {
                 <span className="absolute -bottom-1 left-1/2 transform -translate-x-1/2 w-16 h-0.5 bg-muted-bronze"></span>
               </h3>
 
-              {/* Contact Info with Icons */}
               <div className="space-y-3 text-gray-300">
-                {/* Email */}
                 <div className="flex items-center justify-center gap-3 hover:text-white transition-colors duration-200 py-1">
                   <LuMail
                     className="text-muted-bronze flex-shrink-0"
@@ -80,7 +76,6 @@ export default function FooterCSR({ initialData }) {
                   <p className="text-left">{footer.email}</p>
                 </div>
 
-                {/* Phone Number */}
                 <div className="flex items-center justify-center gap-3 hover:text-white transition-colors duration-200 py-1">
                   <LuPhone
                     className="text-muted-bronze flex-shrink-0"
@@ -89,7 +84,6 @@ export default function FooterCSR({ initialData }) {
                   <p className="text-left">{footer.phone_number}</p>
                 </div>
 
-                {/* Address */}
                 <div className="flex items-center justify-center gap-3 hover:text-white transition-colors duration-200 py-1">
                   <LuMapPin
                     className="text-muted-bronze flex-shrink-0"
@@ -99,7 +93,6 @@ export default function FooterCSR({ initialData }) {
                 </div>
               </div>
 
-              {/* Social Media Icons */}
               <div className="flex justify-center space-x-4 pt-2">
                 {[
                   {
@@ -134,7 +127,6 @@ export default function FooterCSR({ initialData }) {
                 ))}
               </div>
 
-              {/* Copyright */}
               <div className="space-y-1 pt-2">
                 <p className="text-sm text-gray-400 py-1">
                   {footer.copyright_text}
@@ -144,7 +136,6 @@ export default function FooterCSR({ initialData }) {
             </div>
           </div>
 
-          {/* Instagram Section */}
           <div className="text-center w-full py-8 md:py-8 md:px-6 flex flex-col justify-center">
             <div className="space-y-4 mx-auto">
               <a

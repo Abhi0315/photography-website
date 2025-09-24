@@ -5,23 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function NavbarCSR({ initialData }) {
-  const [data, setData] = useState(initialData);
+  const [data] = useState(initialData);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
-
-  useEffect(() => {
-    async function refreshData() {
-      try {
-        const res = await fetch("/api/header-footer");
-        if (!res.ok) return;
-        const json = await res.json();
-        setData(json);
-      } catch (err) {
-        console.error("NavbarCSR fetch error:", err);
-      }
-    }
-    refreshData();
-  }, []);
 
   useEffect(() => {
     setMobileOpen(false);
@@ -93,7 +79,6 @@ export default function NavbarCSR({ initialData }) {
 
       <div className="md:hidden flex items-center justify-between w-full px-4">
         <div className="logo italic">{data.footer.name}</div>
-
         <button
           aria-label="Open menu"
           className="focus:outline-none text-black"
