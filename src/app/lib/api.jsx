@@ -35,3 +35,15 @@ export async function fetchHomePage() {
     return null;
   }
 }
+
+export async function fetchServicePage() {
+  try {
+    const res = await fetch(`${API_BASE_URL}/services/api/fetch-service_page`, {
+      cache: "no-store",
+    });
+    return res.ok ? res.json() : null;
+  } catch (err) {
+    console.error("fetchServicePage error:", err);
+    return null;
+  }
+}
