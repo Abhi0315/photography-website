@@ -1,5 +1,6 @@
 import HeroServer from "./components/home/hero/HeroServer";
 import PhotoGalleryServer from "./components/home/gallery/PhotoGalleryServer";
+import AboutServer from "./components/home/about/AboutServer";
 
 export default async function Page() {
   return (
@@ -9,6 +10,8 @@ export default async function Page() {
 
       {/* Gallery Section */}
       <PhotoGalleryServer />
+      {/* About Section */}
+      <AboutServer />
     </main>
   );
 }
