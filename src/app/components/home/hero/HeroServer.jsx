@@ -1,5 +1,5 @@
 import HeroClient from "./HeroClient";
-import { fetchHomePage } from "../../lib/api";
+import { fetchHomePage } from "../../../lib/api";
 
 export default async function HeroServer() {
   const data = await fetchHomePage();
