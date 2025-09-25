@@ -74,7 +74,6 @@ export default function ServiceSectionCSR({ initialData }) {
     >
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 md:gap-16 lg:gap-20 items-center">
-          {/* Image Section */}
           <motion.div
             className={`relative col-span-1 lg:col-span-6 ${
               isEvenOrder ? "lg:order-1" : "lg:order-2"
@@ -117,7 +116,6 @@ export default function ServiceSectionCSR({ initialData }) {
                 <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/0 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-1000" />
               </div>
 
-              {/* Decorative elements */}
               <div
                 className={`absolute -top-3 -right-3 w-20 h-20 md:-top-4 md:-right-4 md:w-28 md:h-28 bg-muted-bronze/20 rounded-full blur-xl md:blur-2xl ${
                   isEvenOrder ? "lg:-left-4" : "lg:-right-4"
@@ -131,7 +129,6 @@ export default function ServiceSectionCSR({ initialData }) {
             </div>
           </motion.div>
 
-          {/* Content Section */}
           <motion.div
             className={`col-span-1 lg:col-span-6 ${
               isEvenOrder ? "lg:order-2" : "lg:order-1"
@@ -142,7 +139,6 @@ export default function ServiceSectionCSR({ initialData }) {
             variants={contentVariants}
           >
             <div className="flex flex-col justify-center h-full space-y-6 md:space-y-8 lg:space-y-10">
-              {/* Heading Section */}
               {initialData.heading && (
                 <div className="text-center lg:text-left space-y-4 md:space-y-6">
                   <div className="inline-flex items-center space-x-2 md:space-x-3 text-muted-bronze/20">
@@ -159,7 +155,6 @@ export default function ServiceSectionCSR({ initialData }) {
                 </div>
               )}
 
-              {/* Description */}
               {initialData.description && (
                 <div className="space-y-4 md:space-y-6">
                   <p className="text-base md:text-lg lg:text-xl text-black leading-relaxed font-light max-w-2xl text-center lg:text-left font-lato body-text">
@@ -168,7 +163,6 @@ export default function ServiceSectionCSR({ initialData }) {
                 </div>
               )}
 
-              {/* Buttons */}
               <div className="flex flex-col sm:flex-row gap-4 md:gap-5 justify-center lg:justify-start">
                 {initialData.primary_button_text &&
                   initialData.primary_button_url && (
@@ -193,7 +187,6 @@ export default function ServiceSectionCSR({ initialData }) {
                   )}
               </div>
 
-              {/* Divider */}
               <div className="flex justify-center lg:justify-start">
                 <div className="w-24 md:w-32 h-px bg-gradient-to-r from-transparent via-muted-bronze/30 to-transparent" />
               </div>
