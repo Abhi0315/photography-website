@@ -37,7 +37,7 @@ h6 {
 /* Responsive logo sizes */
 @media (min-width: 768px) {
   .logo {
-    font-size: 1.75rem; /* 28px - tablet size */
+    font-size: 1.25rem; /* 28px - tablet size */
   }
 }
 
