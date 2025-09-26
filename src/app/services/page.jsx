@@ -2,6 +2,11 @@ import ServiceSectionCSR from "../components/services/ServiceSectionCSR";
 import ServicesHeroCSR from "../components/services/ServicesHeroCSR";
 import { fetchServicePage } from "../lib/api";
 
+export const metadata = {
+  title: "Photography | Services",
+  description: "A photography portfolio website",
+};
+
 export default async function ServicesSectionsSSR() {
   const data = await fetchServicePage();
   if (!data) return null;
