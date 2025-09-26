@@ -3,7 +3,7 @@ import NavbarSSR from "./components/navbar/NavbarSSR";
 import FooterSSR from "./components/Footer/FooterSSR";
 
 export const metadata = {
-  title: "RW Photography",
+  title: "Photography",
   description: "A photography portfolio website",
 };
 

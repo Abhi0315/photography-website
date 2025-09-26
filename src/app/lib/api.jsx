@@ -39,7 +39,7 @@ export async function fetchHomePage() {
 export async function fetchServicePage() {
   try {
     const res = await fetch(`${API_BASE_URL}/services/api/fetch-service_page`, {
-      cache: "no-store",
+      next: { revalidate: 60 },
     });
     return res.ok ? res.json() : null;
   } catch (err) {

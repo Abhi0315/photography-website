@@ -70,13 +70,14 @@ export default function ServicesHeroCSR({ initialData }) {
       <div className="relative z-10 flex items-center justify-center h-full px-6 md:px-12">
         <div className="text-center max-w-6xl w-full">
           {initialData.heading && (
-            <h1
-              className="text-white uppercase leading-none font-serif drop-shadow-lg
-                         text-4xl sm:text-5xl md:text-[96px] lg:text-[140px]
-                         tracking-[0.12em] md:tracking-[0.6em]"
-            >
-              {initialData.heading}
-            </h1>
+            <div className="flex justify-center">
+              <h1
+                className="text-white uppercase leading-none font-serif drop-shadow-lg
+                         text-5xl sm:text-6xl md:text-[104px] lg:text-[150px]"
+              >
+                {initialData.heading}
+              </h1>
+            </div>
           )}
 
           {initialData.description && (
