@@ -6,29 +6,30 @@ import Link from "next/link";
 
 export default function HeroCSR({ initialData }) {
   const data = initialData;
-  if (!data || !data.is_active) return null;
+  if (!data) return null;
 
   const {
     heading,
     subheading,
     description,
     background_image,
+    primary_image,
     primary_button_text,
     primary_button_url,
     secondary_button_text,
     secondary_button_url,
   } = data;
 
+  const bgImage = background_image || primary_image || "";
+
   return (
     <section
       className="relative min-h-[90vh] bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: `url(${background_image})` }}
+      style={{ backgroundImage: bgImage ? `url(${bgImage})` : "none" }}
     >
-      {/* dark overlay for readability */}
       <div className="absolute inset-0 bg-black/50" aria-hidden="true" />
 
       <div className="relative z-10 container mx-auto px-6 md:px-10 lg:px-16 min-h-[90vh] flex items-center">
-        {/* Left content (centered vertically) */}
         <div className="max-w-2xl text-white">
           {heading && (
             <h1 className="main-heading mb-4 text-white">{heading}</h1>
@@ -60,7 +61,6 @@ export default function HeroCSR({ initialData }) {
           </div>
         </div>
 
-        {/* Subheading on the right side, slightly above bottom with increased letter spacing */}
         {subheading && (
           <div className="absolute right-4" style={{ top: "86vh" }}>
             <div className="text-white text-sm font-lato tracking-[0.2em]">

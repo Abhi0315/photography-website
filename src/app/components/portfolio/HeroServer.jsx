@@ -6,9 +6,10 @@ export default async function HeroServer() {
   if (!data) return null;
 
   const sections = Array.isArray(data) ? data : [data];
+
   const heroSection = sections.find((s) => s && s.section_type === "HERO");
 
-  if (!heroSection || !heroSection.is_active) return null;
+  if (!heroSection) return null;
 
   return <HeroCSR initialData={heroSection} />;
 }
