@@ -22,10 +22,11 @@ export default function GalleryCSR({ initialData }) {
 
   const grouped = useMemo(() => {
     const map = new Map();
-    for (const item of activeItems) {
+    for (let i = 0; i < activeItems.length; i++) {
+      const item = activeItems[i];
       const cat = item.category || {};
-      const slug = cat.slug || `cat-${cat.id || Math.random()}`; // internal only
-      const name = cat.name || "Untitled Category"; // shown to user
+      const slug = cat.slug || `cat-${cat.id ?? i}`;
+      const name = cat.name || "Untitled Category";
 
       if (!map.has(slug)) {
         map.set(slug, {
@@ -48,132 +49,156 @@ export default function GalleryCSR({ initialData }) {
     return arr;
   }, [activeItems]);
 
-  const PAGE_SIZE = 8;
+  // Dynamic PAGE_SIZE based on screen width
+  const [pageSize, setPageSize] = useState(4);
 
-  const [indices, setIndices] = useState({});
   useEffect(() => {
-    setIndices((prev) => {
-      const init = {};
-      for (const g of grouped) init[g.slug] = prev[g.slug] ?? 0;
-      return init;
-    });
-  }, [grouped]);
+    function updatePageSize() {
+      if (window.innerWidth < 640) setPageSize(1); // mobile: 1 image
+      else if (window.innerWidth < 768) setPageSize(2); // sm: 2 images
+      else if (window.innerWidth < 1024) setPageSize(3); // md: 3 images
+      else setPageSize(4); // lg: 4 images
+    }
+    updatePageSize();
+    window.addEventListener("resize", updatePageSize);
+    return () => window.removeEventListener("resize", updatePageSize);
+  }, []);
+
+  const [indices, setIndices] = useState(() => {
+    const init = {};
+    for (const g of grouped) init[g.slug] = 0;
+    return init;
+  });
 
   function handlePrev(slug) {
     setIndices((prev) => {
-      const total = grouped.find((g) => g.slug === slug)?.items.length || 0;
-      if (!total) return prev;
       const start = prev[slug] ?? 0;
-      const nextStart = (start - PAGE_SIZE + total) % total;
+      const nextStart = Math.max(start - pageSize, 0);
       return { ...prev, [slug]: nextStart };
     });
   }
 
   function handleNext(slug) {
     setIndices((prev) => {
-      const total = grouped.find((g) => g.slug === slug)?.items.length || 0;
-      if (!total) return prev;
+      const g = grouped.find((g) => g.slug === slug);
+      if (!g) return prev;
+      const total = g.items.length;
       const start = prev[slug] ?? 0;
-      const nextStart = (start + PAGE_SIZE) % total;
+      const nextStart = start + pageSize >= total ? start : start + pageSize;
       return { ...prev, [slug]: nextStart };
     });
-  }
-
-  function visibleItemsFor(g, start) {
-    const items = g.items || [];
-    const total = items.length;
-    if (!total) return [];
-    if (total <= PAGE_SIZE) return items;
-
-    if (start + PAGE_SIZE <= total)
-      return items.slice(start, start + PAGE_SIZE);
-
-    const first = items.slice(start);
-    const remaining = PAGE_SIZE - first.length;
-    return first.concat(items.slice(0, remaining));
   }
 
   if (!(data.is_active ?? true)) return null;
 
   return (
-    <section className="bg-black text-white py-12">
-      <div className="container mx-auto px-6 md:px-10 lg:px-16">
-        <div className="mb-8">
+    <section className="bg-black text-white py-8 md:py-12">
+      <div className="container mx-auto px-4 sm:px-6 md:px-10 lg:px-16">
+        <div className="mb-6 md:mb-8 text-center">
           {data.heading && (
-            <h2 className="text-3xl font-playfair-display uppercase text-muted-bronze">
+            <h2 className="text-2xl sm:text-3xl md:text-4xl font-playfair-display uppercase text-muted-bronze">
               {data.heading}
             </h2>
           )}
           {data.subheading && (
-            <p className="mt-2 text-white/80">{data.subheading}</p>
+            <p className="mt-2 text-sm sm:text-base text-white/80 px-2">
+              {data.subheading}
+            </p>
           )}
         </div>
 
-        <div className="space-y-12">
+        <div className="space-y-8 md:space-y-12">
           {grouped.map((g) => {
             const start = indices[g.slug] ?? 0;
-            const visible = visibleItemsFor(g, start);
+            const total = g.items.length;
 
             return (
               <div key={g.slug}>
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="uppercase tracking-widest text-lg font-playfair-display text-muted-bronze">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-4 gap-3 sm:gap-0">
+                  <h3 className="uppercase tracking-widest text-base sm:text-lg md:text-xl font-playfair-display text-muted-bronze text-center sm:text-left">
                     {g.name}
                   </h3>
 
-                  <div className="flex items-center gap-3">
+                  <div className="flex items-center justify-center sm:justify-end gap-2 sm:gap-3">
                     {g.view_more_url && (
                       <Link
                         href={g.view_more_url}
-                        className="button px-4 py-2 rounded-none whitespace-nowrap"
+                        className="button px-3 py-1.5 sm:px-4 sm:py-2 text-xs sm:text-sm rounded-none whitespace-nowrap"
                       >
                         View More
                       </Link>
                     )}
-                    <button
-                      onClick={() => handlePrev(g.slug)}
-                      className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white/10"
-                    >
-                      <ChevronLeft size={18} />
-                    </button>
-                    <button
-                      onClick={() => handleNext(g.slug)}
-                      className="w-10 h-10 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white/10"
-                    >
-                      <ChevronRight size={18} />
-                    </button>
+                    <div className="flex gap-2 sm:gap-3">
+                      <button
+                        onClick={() => handlePrev(g.slug)}
+                        disabled={start === 0}
+                        className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-all ${
+                          start === 0 ? "opacity-40 cursor-not-allowed" : ""
+                        }`}
+                      >
+                        <ChevronLeft
+                          size={16}
+                          className="sm:w-[18px] sm:h-[18px]"
+                        />
+                      </button>
+                      <button
+                        onClick={() => handleNext(g.slug)}
+                        disabled={start + pageSize >= total}
+                        className={`w-8 h-8 sm:w-10 sm:h-10 flex items-center justify-center rounded-full border border-white/10 bg-white/5 hover:bg-white/10 transition-all ${
+                          start + pageSize >= total
+                            ? "opacity-40 cursor-not-allowed"
+                            : ""
+                        }`}
+                      >
+                        <ChevronRight
+                          size={16}
+                          className="sm:w-[18px] sm:h-[18px]"
+                        />
+                      </button>
+                    </div>
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6">
-                  {visible.map((item) => {
-                    const imgUrl = normalizeImageUrl(item.image || "");
-                    return (
-                      <figure key={item.id}>
-                        <div className="w-full overflow-hidden rounded-none">
-                          <Image
-                            src={imgUrl || "/placeholder.jpg"}
-                            alt={item.title || ""}
-                            width={500}
-                            height={500}
-                            className="w-full h-[220px] md:h-[260px] object-cover rounded-none"
-                          />
-                        </div>
-                        <figcaption className="mt-3">
-                          {item.title && (
-                            <div className="text-sm font-playfair-display text-white">
-                              {item.title}
-                            </div>
-                          )}
-                          {item.date && (
-                            <div className="text-xs text-white/70 mt-1">
-                              {item.date}
-                            </div>
-                          )}
-                        </figcaption>
-                      </figure>
-                    );
-                  })}
+                {/* Horizontal carousel */}
+                <div className="overflow-hidden relative">
+                  <div
+                    className="flex gap-4 sm:gap-6 transition-transform duration-500 ease-in-out"
+                    style={{
+                      transform: `translateX(-${(start * 100) / pageSize}%)`,
+                    }}
+                  >
+                    {g.items.map((item) => {
+                      const imgUrl = normalizeImageUrl(item.image || "");
+                      return (
+                        <figure
+                          key={item.id}
+                          className="flex-shrink-0 w-full sm:w-[calc(50%-12px)] md:w-[calc(33.333%-16px)] lg:w-[320px]"
+                        >
+                          <div className="w-full overflow-hidden rounded-none">
+                            <Image
+                              src={imgUrl || "/placeholder.jpg"}
+                              alt={item.title || ""}
+                              width={500}
+                              height={500}
+                              className="w-full h-[200px] sm:h-[250px] md:h-[300px] object-cover rounded-none"
+                            />
+                          </div>
+                          <figcaption className="mt-2 sm:mt-3">
+                            {item.title && (
+                              <div className="text-xs sm:text-sm md:text-base font-playfair-display text-white line-clamp-2">
+                                {item.title}
+                              </div>
+                            )}
+                            {item.date && (
+                              <div className="text-xs text-white/70 mt-1">
+                                {item.date}
+                              </div>
+                            )}
+                          </figcaption>
+                        </figure>
+                      );
+                    })}
+                  </div>
                 </div>
               </div>
             );
