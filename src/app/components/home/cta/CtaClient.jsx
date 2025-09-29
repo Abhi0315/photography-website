@@ -1,18 +1,13 @@
 "use client";
 import React from "react";
 import Link from "next/link";
-// Removed Image import as we are now using inline SVG
-
-// New Hook SVG Component based on the desired decorative shape
 const DecorativeHookSvg = ({ className }) => (
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 100 100"
-    // Use className prop to pass positioning/sizing/transform classes
     className={`w-24 h-24 absolute z-0 pointer-events-none ${className}`}
     fill="none"
   >
-    {/* Simple hook path: Starts top right (90, 10), curves down and left to (50, 90) */}
     <path
       d="M 90 10 Q 90 90, 50 90"
       stroke="#b08d57"
