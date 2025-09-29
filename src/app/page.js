@@ -1,17 +1,15 @@
 import HeroServer from "./components/home/hero/HeroServer";
 import PhotoGalleryServer from "./components/home/gallery/PhotoGalleryServer";
 import AboutServer from "./components/home/about/AboutServer";
+import TestimonialsServer from "./components/home/testimonials/TestimonialsServer";
 
 export default async function Page() {
   return (
     <main>
-      {/* Hero Section */}
       <HeroServer />
-
-      {/* Gallery Section */}
       <PhotoGalleryServer />
-      {/* About Section */}
       <AboutServer />
+      <TestimonialsServer />
     </main>
   );
 }

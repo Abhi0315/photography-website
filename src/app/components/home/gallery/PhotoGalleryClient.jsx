@@ -13,7 +13,6 @@ export default function PhotoGalleryClient({ gallery }) {
 
   return (
     <section className="w-full px-6 py-12">
-      {/* Heading */}
       <div className="text-center mb-10">
         <h2
           className="text-3xl md:text-4xl font-bold uppercase tracking-wide"
@@ -30,17 +29,15 @@ export default function PhotoGalleryClient({ gallery }) {
           </p>
         )}
       </div>
-
-      {/* Masonry Grid */}
-      <div className="columns-1 sm:columns-2 md:columns-3 gap-6 space-y-6">
+      <div className="columns-2 md:columns-3 gap-6 space-y-6">
         {images.map((item) => (
-          <div key={item.id} className="break-inside-avoid">
+          <div key={item.id} className="break-inside-avoid shadow-lg ">
             <Image
               src={item.image}
               alt={item.title || "gallery image"}
               width={600}
               height={400}
-              className="w-full h-auto shadow-md hover:opacity-90 transition"
+              className="w-full h-auto shadow-md hover:opacity-90 transition rounded-none"
               style={{ objectFit: "contain" }}
             />
           </div>
