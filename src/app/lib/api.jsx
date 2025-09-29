@@ -31,7 +31,7 @@ export async function fetchHomePage() {
     if (!res.ok) throw new Error(`Failed to fetch home page: ${res.status}`);
     return res.json();
   } catch (err) {
-    console.error("❌ fetchHomePage error:", err);
+    console.error(" fetchHomePage error:", err);
     return null;
   }
 }
