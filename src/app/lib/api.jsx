@@ -47,3 +47,18 @@ export async function fetchServicePage() {
     return null;
   }
 }
+
+export async function fetchPortfolioPage() {
+  try {
+    const res = await fetch(
+      `${API_BASE_URL}/portfolio/api/fetch-portfolio_page`,
+      {
+        next: { revalidate: 60 },
+      }
+    );
+    return res.ok ? res.json() : null;
+  } catch (err) {
+    console.error("fetchPortfolioPage error:", err);
+    return null;
+  }
+}
