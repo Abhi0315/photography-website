@@ -50,6 +50,7 @@ export async function fetchServicePage() {
 
 export async function fetchPortfolioPage() {
   try {
+    if (!API_BASE_URL) throw new Error("API_BASE_URL is missing");
     const res = await fetch(
       `${API_BASE_URL}/portfolio/api/fetch-portfolio_page`,
       {
